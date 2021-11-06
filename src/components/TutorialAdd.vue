@@ -14,7 +14,7 @@
       </div>
 
       <div class="form-group">
-        <label for="description">描..述</label>
+        <label for="description">Description(描述)</label>
         <input
           class="form-control"
           id="description"
@@ -22,23 +22,6 @@
           v-model="tutorial.description"
           name="description"
         />
-      </div>
-
-      
-
-      <div class="form-group my-2">
-        <label for="season">泰泰泰時序(測試中)</label>
-          <v-container fluid> 
-                <v-select
-                  v-model="tutorial.idx"
-                  :items="word.spell_zh_tw"
-                  label="請選擇"
-                  multiple
-                  chips
-                  hint="這是一個測試選項"
-                  persistent-hint
-                ></v-select> 
-          </v-container> 
       </div>
 
       <button @click="saveTutorial" class="btn btn-success">Submit</button>
@@ -53,30 +36,17 @@
 
 <script>
 import TutorialDataService from "../services/TutorialDataService";
-import WordDataService from "../services/WordDataService";
-
 
 export default {
   name: "add-tutorial",
   data() {
     return {
-      season_states:['s1', 's2', 's3', 's4',],
-      ttemp:[],
       tutorial: {
         title: "",
         description: "",
-        idx: [],
         published: false
       },
       submitted: false
-      ,
-      word: {  
-        spell_tayal: "",
-        spell_zh_tw: "",  
-        season: "",
-        topic:"",
-        description: "", 
-      },
     };
   },
   methods: {
@@ -104,11 +74,8 @@ export default {
         description: "",
         published: false
       };
-    },
-  },
-  mounted() {
-    TutorialDataService.getAll().on("value", this.onDataChange);
-  },
+    }
+  }
 };
 </script>
 

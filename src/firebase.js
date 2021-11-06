@@ -24,21 +24,20 @@ import "firebase/database";
 
 
 let config = { 
+  // apiKey: "AIzaSyDoQE54LLeT_NMPBSWPpLAG16xxI89aru0",
+  // authDomain: "yanmieemie.firebaseapp.com",
+  // projectId: "yanmieemie",
+  // storageBucket: "yanmieemie.appspot.com",
+  // messagingSenderId: "674535492026",
+  // appId: "1:674535492026:web:62778440a5b208d52ef583"
+
   apiKey: "AIzaSyDoQE54LLeT_NMPBSWPpLAG16xxI89aru0",
   authDomain: "yanmieemie.firebaseapp.com",
+  databaseURL: "https://yanmieemie-default-rtdb.asia-southeast1.firebasedatabase.app",
   projectId: "yanmieemie",
   storageBucket: "yanmieemie.appspot.com",
   messagingSenderId: "674535492026",
-  appId: "1:674535492026:web:62778440a5b208d52ef583"
-
-  // apiKey: "AIzaSyCkm291w41Hh9ST_mLd3b-oxR1f3Sjd8gY",
-  // authDomain: "h2fnote.firebaseapp.com",
-  // databaseURL: "https://h2fnote-default-rtdb.firebaseio.com",
-  // projectId: "h2fnote",
-  // storageBucket: "h2fnote.appspot.com",
-  // messagingSenderId: "813097034040",
-  // appId: "1:813097034040:web:519e3cc628d721f42661cd",
-  // measurementId: "G-DNG7BEFMTW"
+  appId: "1:674535492026:web:4735922f51638ece2ef583"
 };
 
 firebase.initializeApp(config);

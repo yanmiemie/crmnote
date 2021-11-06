@@ -6,12 +6,22 @@ Vue.use(Router);
 export default new Router({
   // mode: "history",
   routes: [
-    // {
-    //   path: "/",
-    //   alias: "/tutorials",
-    //   name: "tutorials",
-    //   component: () => import("./components/TutorialsList")
-    // },
+    {
+      path: "/",
+      alias: "/tutorials",
+      name: "tutorials",
+      component: () => import("./components/TutorialsList")
+    },
+    {
+      path: "/add",
+      name: "add",
+      component: () => import("./components/TutorialAdd")
+    },
+    {
+      path: "/TutorialMdf",
+      name: "TutorialMdf",
+      component: () => import("./components/TutorialMdf")
+    },
     // {
     //   path: "/p",
     //   name: "p",
@@ -20,16 +30,16 @@ export default new Router({
 
     
     
-    {
-      path: "/posGM_0",
-      name: "posGM",
-      component: () => import("./components/posGM")
-    },
-    {
-      path: "/WordList",
-      name: "WordList",
-      component: () => import("./components/WordList")
-    },
+    // {
+    //   path: "/posGM_0",
+    //   name: "posGM",
+    //   component: () => import("./components/posGM")
+    // },
+    // {
+    //   path: "/WordList",
+    //   name: "WordList",
+    //   component: () => import("./components/WordList")
+    // },
     // {
     //   path: "/drag",
     //   name: "drag",
@@ -60,12 +70,7 @@ export default new Router({
       path: "/printa",
       name: "printa",
       component: () => import("./components/printa")
-    }, 
-    {
-      path: "/add",
-      name: "add",
-      component: () => import("./components/TutorialAdd")
-    },
+    },  
     {
       path: "/v3",
       name: "v3",
@@ -91,11 +96,6 @@ export default new Router({
       name: "PMNAdd",
       component: () => import("./components/PMNAdd")
     }, 
-    {
-      path: "/TutorialsList",
-      name: "TutorialsList",
-      component: () => import("./components/TutorialsList")
-    },
     {
       path: "/PMNList",
       name: "PMNList",
