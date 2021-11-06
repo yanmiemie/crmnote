@@ -1,0 +1,67 @@
+<html>
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.0/vue.js"></script>
+</head>
+
+<body> 
+<div id="app">
+  
+
+  <!-- {{ userData.id  }} -->
+  <hr>
+  {{ hkk[1] }}
+  <hr> 
+  <!-- {{ hkk._ragicId }} -->
+  <hr>
+  <!-- {{ nowArywith(json) }} -->
+  <hr> 
+  
+
+  
+  
+  <hr> 
+  目前是這樣
+  <div v-for="udata in userData">
+    <!-- {{ udata }} -->
+    NO.{{ udata._seq }} |
+    {{ udata.身份證號 }}
+    <!-- {{ udata.團體單位名稱 }}
+    {{ udata.來賓姓別 }} -->
+    {{ udata['來賓姓名(真實姓名)'] }}
+    {{ udata.建立日期 }}
+  
+    <hr>
+    
+    <!-- {{ udata(2) }} -->
+  <!-- Id : {{ udata.id }} Name: {{ udata.name }} -->
+  </div>
+</div>    
+<script>
+var dataURL = 'https://www.ragic.com/xihu/forms13/50?api&APIKey=cHB2WURReGNHLzNaU1JyZ2h0YlVwbW5DM1JmN2VzRDV5ZUtQNVlrcXJtZWVhYjZoUHl6UmVWbmkvRkI5Zi82cw==&listing';
+var App = new Vue({
+  el: '#app',
+  data: {
+    d:[],
+    nowAry:[],
+    hkk: [{ "_ragicId": 8428, "來賓姓名(真實姓名)": "劉賢", "建立日期": "2021/09/09 13:31:15", "_seq": 1000 }, { "_ragicId": 8428, "來賓姓名(真實姓名)": "劉污", "建立日期": "2021/09/29 13:31:15", "_seq": 1001 }],
+    userData: [  ] // initialize empty array
+  },
+  mounted() { // when the Vue app is booted up, this is run automatically. 
+    var self = this // create a closure to access component in the callback below
+    $.getJSON(dataURL, function(data) {
+      self.userData = data;
+
+      // self.nowAry = JSON.Parse([{ "_ragicId": 28, "來賓姓名(真實姓名)": "劉賢", "建立日期": "2021/09/09 13:31:15", "_seq": 1000 }, { "_ragicId": 8428, "來賓姓名(真實姓名)": "劉污", "建立日期": "2021/09/29 13:31:15", "_seq": 1001 }])
+    
+      self.nowAry = JSON.stringify(data);
+    });
+ 
+
+    // console.log(data);
+  }
+})       
+</script>  
+         
+</body>
+</html>        

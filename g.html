@@ -1,0 +1,544 @@
+<div id="app">
+  <div class="top-bar">
+  <h1 align="center" class="title is-1" >List Ninja</h1>
+</div>
+<todo></todo>
+<div class="footer">
+<span>List Ninja &copy; 2018</span>
+</div>
+</div>
+
+
+<template id="todo">
+<div class="container">
+<div class="panel cta-panel">
+  <div class="wrap">
+    <span>Stay organized. Create a list for anything. No account required.</span>
+    <div class="list-contain">
+        <div>
+          <div class="field">
+            <label class="label">Let's get organized!</label>
+            <div class="control">
+              <input class="input" type="text" placeholder="Type here to add new item" v-model="todo" autofocus>
+              <a class="button is-primary" @click="submitName()">&plus;</a>
+            </div>
+          </div>
+        </div>
+        <div class="list">
+          <h2 v-if="todos.length > 0">items</h2>
+           <!--<div class="span loader" v-if="loading">
+                <div class="circle"></div>
+           </div>-->
+          <ul>
+            <li v-for="(todo, index) of todos" v-bind:key="todo['.key']">
+              <div v-if="!todo.edit">
+                <input type="checkbox" @click="updateTodoStatus(todo['.key'], todo.complete)"
+                       :checked="todo.complete == true"
+                       v-model="todo.complete"/>
+                <p v-bind:class="{ complete: todo.complete == true }" >{{ todo.name }} </p>
+                <div class="list-controls" :class="{highlight:index == selected}" @click="selected = index">
+                <span class="list-options">⋮</span>
+                <button class="button btn-delete" @click="removeTodo(todo['.key'])">Delete</button>
+                <button class="button btn-neutral" @click="editTodo(todo['.key'])">Edit</button>
+                </div>
+              </div>
+              <div v-else class="edit-list">
+                <input type="text" v-model="todo.name">
+                <div class="list-controls">
+                  <button class="button btn-save" @click="saveEdit(todo)">Save</button>
+                  <button class="button btn-neutral" @click="cancelEdit(todo['.key'])">Cancel</button>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+  </div>
+</div>
+</div>
+</template>
+
+
+<script>
+//Firebase config
+var config = {
+    apiKey: "AIzaSyBlHZAzH11UbYblbYsiBaInIkZ0eK8TPsg",
+    authDomain: "list-ninja-50455.firebaseapp.com",
+    databaseURL: "https://list-ninja-50455.firebaseio.com",
+    projectId: "list-ninja-50455",
+    storageBucket: "",
+    messagingSenderId: "113969436651"
+}
+
+
+var config2 = {
+  apiKey: "AIzaSyBfGRf3rz_p6R21JDLYjpYjXjwKrLaHb8c",
+  authDomain: "nm-tayal.firebaseapp.com",
+  databaseURL: "https://nm-tayal-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "nm-tayal",
+  storageBucket: "nm-tayal.appspot.com",
+  messagingSenderId: "816237299811",
+  appId: "1:816237299811:web:507e570a2200ce90dd1056",
+  measurementId: "G-FD3QSMYTP3"
+}
+
+
+var app = firebase.initializeApp(config);
+var db = app.database();
+var todoRef = db.ref('names');
+
+function guid() {
+  function s4() {
+    return Math.floor((1 + Math.random()) * 0x10000)
+      .toString(16)
+      .substring(1);
+  }
+  return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+}
+
+// check if local storage exists
+if (typeof localStorage !== 'undefined') {
+    //check for existing token
+    if (localStorage.getItem('token')) {
+          app.token = localStorage.getItem('token');
+      } else {
+          // generate unique token
+          const token =  guid();
+          // save token to local storage
+          localStorage.setItem('token', token);
+          app.token = token;
+      }
+} 
+
+// get user saved items based on local storage token
+var userTodos = db.ref('names').orderByChild('user').equalTo(app.token);
+
+Vue.component('todo', {
+	template: '#todo',
+	data () {
+    return {
+      todo: '',
+      selected: undefined
+    }  
+  },
+  methods:{
+    submitName(){
+      todoRef.push({name : this.todo,
+                    edit : false,
+                    complete: false,
+                    user : app.token});
+      this.todo = '';
+    },
+    updateTodoStatus(key, status){
+      if(status === true){
+        status = false;
+      } else {
+        status = true;
+      }
+       todoRef.child(key).update({ 
+        complete: status,
+      })
+    },
+    removeTodo(key){
+      todoRef.child(key).remove();
+    },
+    editTodo(key){
+      todoRef.child(key).update({ 
+        edit: true,
+      })
+    },
+    showListOptions(){
+      return {
+        showOptions: true
+      }
+    },
+    saveEdit(todo){
+      const key = todo['.key'];
+      todoRef.child(key).set({
+        name: todo.name,
+        edit: false,
+        complete: todo.complete,
+        user: app.token
+      });
+    },
+    cancelEdit(key){
+      todoRef.child(key).update({
+        edit: false
+      });
+    }
+  },
+  firebase:{
+    todos : userTodos
+  }
+});
+
+new Vue({
+  el: '#app'
+});
+
+</script>
+
+<style>
+  * {margin:0; padding:0; box-sizing:border-box;border:none; outline:none;}
+
+body {
+ /* background: #7F7FD5; 
+background: -webkit-linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);  
+background: linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5); 
+  background: #a8ff78; 
+background: -webkit-linear-gradient(to right, #78ffd6, #a8ff78);  
+background: linear-gradient(to right, #78ffd6, #a8ff78); */
+  background: #FDC830; 
+background: -webkit-linear-gradient(to right, #F37335, #FDC830);  
+background: linear-gradient(to right, #F37335, #FDC830); 
+}
+
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #3d85ce;
+  padding:50px 0;
+  float:left;
+  width:100%;
+  position:relative;
+}
+
+h1 {
+  font-weight: bold;
+  font-size:35px;
+  text-align:left;
+  line-height:50px;
+  text-transform:uppercase;
+  letter-spacing:2px;
+  color:#fff;
+  display:block;
+  float:left;
+  position:relative;
+}
+
+h1:after {
+    content: '';
+    position: absolute;
+    right: 0;
+    height: 4px;
+    width: 121px;
+    background: #fff;
+    top: 23px;
+}
+
+h2 {
+    float: left;
+    text-transform: uppercase;
+    font-size: 14px;
+    color: #fdc731;
+    margin: 10px 0;
+    letter-spacing: 1px;
+}
+
+.top-bar {
+  position:absolute;
+  left:0;
+  top:0;
+  z-index:100;
+  height:50px;
+  width:100%;
+  padding:30px 60px;
+}
+
+.list-contain {
+    width: 400px;
+    padding: 15px;
+    margin: 0 20px 0 0;
+    position: relative;
+    float: right;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.08);
+}
+
+.list {
+  width:100%;
+  float:left;
+  margin:20px 0 0;
+}
+
+.list ul {
+  width:100%;
+  float:left;
+  list-style:none;
+  height:100%;
+}
+
+.list ul li {
+  display:block;
+  float:left;
+  width:100%;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  overflow:hidden;
+  height:40px;
+  margin:0 0 10px;
+  border-radius:5px;
+  background:#fff;
+  text-align:left;
+  position:relative;
+}
+
+.list ul li input[type="checkbox"] {
+    display: block;
+    position: absolute;
+    top: 12px;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    z-index:100;
+}
+
+span.list-options {
+    display: block;
+    position: absolute !important;
+    right: auto;
+    left: -10px !important;
+    cursor:pointer;
+    color: #fdc731 !important;
+    font-weight:bold !important;
+   font-size:30px !important;
+}
+
+.list ul li p, .edit-list input {
+    display: block;
+    float: left;
+    padding: 0 0 0 25px;
+    height: 40px;
+    line-height: 40px;
+    width: calc(100% - 60px);
+    color: #7b7b7b;
+    font-size: 16px;
+    font-weight: 300 !important;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    border-bottom: 1px solid #e4e4e4;
+    position:relative;
+}
+
+.list ul li p:after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 1px;
+    background: #e4e4e4;
+    top: 20px;
+    left: 25px;
+    transition:all 0.3s ease;
+}
+
+.list ul li p.complete:after {
+  width:100% !important;
+}
+
+.list ul li p.complete {
+  color: #e4e4e4 !important;
+  font-style:italic;
+}
+
+.list-controls {
+    float: right;
+    position: absolute;
+    right: 0;
+    height: 40px;
+    padding:0 0 0 10px;
+}
+
+.list-controls button, .list-controls a{
+  display:none;
+  padding: 4px 5px;
+  width: 100%;
+  border:none;
+  color:#fff;
+  font-weight:bold;
+  font-size:10px;
+  text-align:center;
+  cursor:pointer;
+}
+
+.edit-list .list-controls button {
+  display:block;
+}
+
+.list-controls .button.btn-delete {
+ background: #ff5454;
+}
+
+.list-controls .button.btn-neutral {
+ background: #ccc;
+}
+
+.list-controls .button.btn-save {
+ background: #7bd00c;
+}
+
+.list-controls.highlight button {
+  display:block;
+}
+
+.label {
+    display: block;
+    float: left;
+    width: 100%;
+    font-weight: normal;
+    text-align: left;
+    font-size: 30px;
+    padding:10px 0;
+      margin: 0 0 20px 0;
+    color: #f37435;
+  line-height:1;
+}
+
+.input {
+    display: block;
+    width: calc(100% - 60px);
+    height: 40px;
+    color: #7b7b7b;
+    font-size: 16px;
+    float: left;
+    margin: 0 10px 0 0;
+    border-radius: 5px;
+    border-bottom: 1px solid #e4e4e4;
+}
+
+.input::placeholder {
+  color:#ccc;
+}
+
+.panel {
+  float:left;
+  width:100%;
+  position:relative;
+  height:100vh;
+  min-height:400px;
+}
+
+a.button.is-primary {
+    display: block;
+    float: left;
+    width: 50px;
+    height: 40px;
+    background: #f37435;
+    color: #fff;
+    line-height: 40px;
+    border-radius: 5px;
+    padding: 0 15px;
+    font-weight: bold;
+    font-size: 30px;
+    cursor:pointer;
+}
+
+.panel .wrap {
+  height:100%;
+  padding:0 40px;
+}
+
+.panel.cta-panel {
+  height:calc(100vh - 100px);
+}
+
+.cta-panel span {
+  position:relative;
+  float:left;
+  top:50%;
+  transform:translateY(-50%);
+  left:20px;
+  font-size:34px;
+  font-weight:300;
+  color:#fff;
+  width:calc(100% - 450px);
+  max-width:515px;
+  line-height:1.3;
+  text-align:left;
+  padding: 0 20px 0 0;
+}
+
+.footer {
+  position:absolute;
+  bottom:10px;
+  left:0;
+  width:100%;
+}
+
+.footer span {
+  display:block;
+  width:100%;
+  text-align:center;
+  font-size:14px;
+  color:#fff;
+  font-weight:bold;
+  text-transform:uppercase;
+}
+
+.circle{
+    margin: 40px auto;
+    position: relative;
+    width: 8px;
+    height: 8px;
+    background-color: #f37435;
+    box-shadow: -14px 0px 0px #f37435;
+    border-radius: 50%;
+    -webkit-animation: circle_classic 1s ease-in-out infinite alternate;
+       -moz-animation: circle_classic 1s ease-in-out infinite alternate;
+            animation: circle_classic 1s ease-in-out infinite alternate;
+}
+
+@-webkit-keyframes circle_classic{
+    0%{ opacity: 0.1; -webkit-transform: rotate(0deg) scale(0.5);}
+   100%{opacity: 1; -webkit-transform: rotate(360deg) scale(1.2);}
+}
+@-moz-keyframes circle_classic{
+    0%{ opacity: 0.1; -moz-transform: rotate(0deg) scale(0.5);}
+   100%{opacity: 1; -moz-transform: rotate(360deg) scale(1.2);}
+}
+@keyframes circle_classic{
+    0%{ opacity: 0.1; transform: rotate(0deg) scale(0.5);}
+   100%{opacity: 1; transform: rotate(360deg) scale(1.2);}
+}
+
+
+@media screen and (max-width: 800px) {
+  h1 {
+    float:none;
+    display:inline-block;
+  }
+  .cta-panel span, .list-contain {
+    position:relative;
+    text-align:center;
+    top:auto;
+    left:auto;
+    transform:none;
+    margin:20px auto;
+  }
+  .cta-panel span {
+    font-size:24px;
+    margin:60px 0;
+    width:100%;
+    max-width:100%;
+  }
+  
+  .list-contain {
+    float:none;
+    clear:both;
+    overflow:auto;
+    width:100%;
+    max-width:400px;
+  }
+  
+  .panel .wrap {
+      height: 100%;
+      padding: 0 15px;
+  }
+  
+}
+</style>
