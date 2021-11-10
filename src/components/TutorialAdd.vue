@@ -14,7 +14,7 @@
           ></v-text-field>  
         </div>
 
-        <div class="row-span-1 col-span-2" >  
+        <div class="row-span-1 col-span-2 " >  
           <v-text-field
             v-model="tutorial.pay"
             label="金額"
@@ -165,18 +165,7 @@ export default {
       };
     }
   }
-};
-
-// function test(el){
-//   el.querySelector("#v-picker__title").style.display = "color:hsl(138, 73%, 41%)";
-// }
-
-// function myFunction() {
-//   document.getElementById("dp1").childNodes= "color:hsl(138, 73%, 41%)";
-  
-// } 
-
-// myFunction();
+}; 
 </script>
 
 <style>
