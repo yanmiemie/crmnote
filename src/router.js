@@ -7,10 +7,15 @@ export default new Router({
   // mode: "history",
   routes: [
     {
-      path: "/",
+      path: "/List",
       alias: "/tutorials",
       name: "tutorials",
       component: () => import("./components/TutorialsList")
+    },
+    {
+      path: "/",
+      name: "add",
+      component: () => import("./components/TutorialAdd")
     },
     {
       path: "/add",
@@ -50,61 +55,61 @@ export default new Router({
     //   name: "pd3",
     //   component: () => import("./components/pd3")
     // },
-    {
-      path: "/pd",
-      name: "pd",
-      component: () => import("./components/posGMdrop")
-    },
-    {
-      path: "/vvv",
-      name: "vvv",
-      component: () => import("./components/vvv")
-    }, 
-    {
-      path: "/ppp",
-      name: "ppp",
-      component: () => import("./components/ppp")
-    }, 
+    // {
+    //   path: "/pd",
+    //   name: "pd",
+    //   component: () => import("./components/posGMdrop")
+    // },
+    // {
+    //   path: "/vvv",
+    //   name: "vvv",
+    //   component: () => import("./components/vvv")
+    // }, 
+    // {
+    //   path: "/ppp",
+    //   name: "ppp",
+    //   component: () => import("./components/ppp")
+    // }, 
     
-    {
-      path: "/printa",
-      name: "printa",
-      component: () => import("./components/printa")
-    },  
-    {
-      path: "/v3",
-      name: "v3",
-      component: () => import("./components/v3")
-    },
-    {
-      path: "/",
-      name: "PMNAdd",
-      component: () => import("./components/PMNAdd")
-    },
-    {
-      path: "/PMSAdd",
-      name: "PMSAdd",
-      component: () => import("./components/PMSAdd")
-    },
-    {
-      path: "/PMSList",
-      name: "PMSList",
-      component: () => import("./components/PMSList")
-    }, 
-    {
-      path: "/PMNAdd",
-      name: "PMNAdd",
-      component: () => import("./components/PMNAdd")
-    }, 
-    {
-      path: "/PMNList",
-      name: "PMNList",
-      component: () => import("./components/PMNList")
-    },
-    {
-      path: "/cardDisplay",
-      name: "cardDisplay",
-      component: () => import("./components/cardDisplay")
-    },
+    // {
+    //   path: "/printa",
+    //   name: "printa",
+    //   component: () => import("./components/printa")
+    // },  
+    // {
+    //   path: "/v3",
+    //   name: "v3",
+    //   component: () => import("./components/v3")
+    // },
+    // {
+    //   path: "/",
+    //   name: "PMNAdd",
+    //   component: () => import("./components/PMNAdd")
+    // },
+    // {
+    //   path: "/PMSAdd",
+    //   name: "PMSAdd",
+    //   component: () => import("./components/PMSAdd")
+    // },
+    // {
+    //   path: "/PMSList",
+    //   name: "PMSList",
+    //   component: () => import("./components/PMSList")
+    // }, 
+    // {
+    //   path: "/PMNAdd",
+    //   name: "PMNAdd",
+    //   component: () => import("./components/PMNAdd")
+    // }, 
+    // {
+    //   path: "/PMNList",
+    //   name: "PMNList",
+    //   component: () => import("./components/PMNList")
+    // },
+    // {
+    //   path: "/cardDisplay",
+    //   name: "cardDisplay",
+    //   component: () => import("./components/cardDisplay")
+    // },
   ]
 });

@@ -1,30 +1,95 @@
 <template>
-  <div class="submit-form">
+  <div class=" ">
     <div v-if="!submitted">
-      <div class="form-group">
-        <label for="title">Title</label>
-        <input
-          type="text"
-          class="form-control"
-          id="title"
-          required
-          v-model="tutorial.title"
-          name="title"
-        />
+
+
+  <div class="grid gap-x-2 grid-cols-4 mx-1">
+        <div class="col-span-2 ">
+          <v-text-field
+            v-model="tutorial.title"
+            label="姓名"
+            outlined
+            clearable
+          ></v-text-field>  
+        </div>
+
+        <div class="row-span-2 col-span-2" >  
+          <v-checkbox 
+            class=" fw-bolder"
+            v-model="tutorial.charged"
+            :label="`月卡方案`"
+          ></v-checkbox>
+
+          <v-checkbox
+          class="fw-bolder "
+            v-model="tutorial.ts_charged"
+            :label="`運費減免`"
+          ></v-checkbox>
+
+          <v-checkbox
+          class="fw-bolder"
+            v-model="tutorial.food_charged"
+            :label="`待收費`"
+          ></v-checkbox> 
+        </div>
+
+        <div class="col-span-2 " >  
+           
+          <v-text-field
+            v-model="tutorial.pay"
+            label="金額"
+            outlined
+            clearable
+          ></v-text-field>  
+        </div>
+
+        <div class="col-span-4" >  
+          <v-text-field
+            v-model="tutorial.description2"
+            label="算法公式"
+            outlined
+            clearable
+          ></v-text-field>  
+
+          <v-text-field
+            v-model="tutorial.description1"
+            label="備註"
+            outlined
+            clearable
+          ></v-text-field> 
+          
+        </div>
+        <div class="col-span-4"
+        ><v-date-picker
+              v-model="tutorial.bk_date1"
+              :first-day-of-week="1"
+              :show-current="false"  
+              :show-adjacent-months="false"
+              multiple
+              elevation="15"
+              width="full"
+            ></v-date-picker>
+            
+            
       </div>
 
-      <div class="form-group">
-        <label for="description">Description(描述)</label>
-        <input
-          class="form-control"
-          id="description"
-          required
-          v-model="tutorial.description"
-          name="description"
-        />
-      </div>
+      <div class="col-span-4">
+        <v-date-picker
+              v-model="tutorial.bk_date2"
+              :first-day-of-week="1"
+              :show-current="false"  
+              multiple 
+              elevation="15"
+              width="full" 
+              scrollable="true"
+            ></v-date-picker>
+            </div>
+      </div> 
+ 
+ 
 
-      <button @click="saveTutorial" class="btn btn-success">Submit</button>
+      <button @click="saveTutorial" 
+               class="item-center btn btn-danger m-5"> 登記 </button>
     </div>
 
     <div v-else>
@@ -44,6 +109,7 @@ export default {
       tutorial: {
         title: "",
         description: "",
+        bk_date:[],
         published: false
       },
       submitted: false
@@ -54,7 +120,22 @@ export default {
       var data = {
         title: this.tutorial.title,
         description: this.tutorial.description,
-        published: false
+        bk_date1: this.tutorial.bk_date1,
+        bk_date2: this.tutorial.bk_date2,
+        charged:this.tutorial.charged,
+        // address:this.tutorial.address,
+        
+        
+        
+        // landmark:this.tutorial.landmark,
+        published: true
+
+        // mb_name: this.tutorial.mb_name,
+        // mb_type: this.tutorial.mb_type,
+        // mb_bill: this.tutorial.mb_bill,
+        // mb_bkdate: this.tutorial.mb_bkdate,
+        // memo: this.tutorial.memo,
+        // published: true
       };
 
       TutorialDataService.create(data)

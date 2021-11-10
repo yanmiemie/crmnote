@@ -16,13 +16,13 @@
         >
           {{ tutorial.title }}
  
-        <!-- <v-date-picker
+        <v-date-picker
               v-model="tutorial.date_mor"
               multiple
               no-title
               scrollable
             > 
-        </v-date-picker> -->
+        </v-date-picker>
              
           
         </li> 
@@ -115,8 +115,8 @@ export default {
           title: data.title,
           description: data.description,
           published: data.published,
-          date_s:data.date_s,
-          date_mor:data.date_mor,
+          // date_s:data.date_s,
+          // date_mor:data.date_mor,
         });
       });
 
