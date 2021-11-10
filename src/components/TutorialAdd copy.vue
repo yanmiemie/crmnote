@@ -10,22 +10,11 @@
             label="姓名"
             outlined
             clearable
-
-            solo
           ></v-text-field>  
         </div>
 
-        <div class="row-span-1 col-span-2" >  
-          <v-text-field
-            v-model="tutorial.pay"
-            label="金額"
-            outlined
-            clearable
-
-            solo
-          ></v-text-field>  
-
-          <!-- <v-checkbox 
+        <div class="row-span-2 col-span-2" >  
+          <v-checkbox 
             class=" fw-bolder"
             v-model="tutorial.charged"
             :label="`月卡方案`"
@@ -41,12 +30,17 @@
           class="fw-bolder"
             v-model="tutorial.food_charged"
             :label="`待收費`"
-          ></v-checkbox>  -->
+          ></v-checkbox> 
         </div>
 
         <div class="col-span-2 " >  
            
-          
+          <v-text-field
+            v-model="tutorial.pay"
+            label="金額"
+            outlined
+            clearable
+          ></v-text-field>  
         </div>
 
         <div class="col-span-4" >  
@@ -55,8 +49,6 @@
             label="算法公式"
             outlined
             clearable
-
-            solo
           ></v-text-field>  
 
           <v-text-field
@@ -64,14 +56,11 @@
             label="備註"
             outlined
             clearable
-
-            solo
           ></v-text-field> 
           
         </div>
         <div class="col-span-4"
         ><v-date-picker
-              id="dp1" 
               v-model="tutorial.bk_date1"
               :first-day-of-week="1"
               :show-current="false"  
@@ -86,7 +75,6 @@
 
       <div class="col-span-4">
         <v-date-picker
-              id="dp2" 
               v-model="tutorial.bk_date2"
               :first-day-of-week="1"
               :show-current="false"  
@@ -170,17 +158,6 @@ export default {
     }
   }
 };
-
-// function test(el){
-//   el.querySelector("#v-picker__title").style.display = "color:hsl(138, 73%, 41%)";
-// }
-
-// function myFunction() {
-//   document.getElementById("dp1").childNodes= "color:hsl(138, 73%, 41%)";
-  
-// } 
-
-// myFunction();
 </script>
 
 <style>
