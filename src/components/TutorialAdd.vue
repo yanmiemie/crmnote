@@ -8,8 +8,7 @@
           <v-text-field
             v-model="tutorial.title"
             label="姓名"
-            outlined
-            clearable
+            outlined 
 
             solo
           ></v-text-field>  
@@ -19,8 +18,7 @@
           <v-text-field
             v-model="tutorial.pay"
             label="金額"
-            outlined
-            clearable
+            outlined 
 
             solo
           ></v-text-field>  
@@ -53,8 +51,7 @@
           <v-text-field
             v-model="tutorial.description2"
             label="算法公式"
-            outlined
-            clearable
+            outlined 
 
             solo
           ></v-text-field>  
@@ -62,8 +59,7 @@
           <v-text-field
             v-model="tutorial.description1"
             label="備註"
-            outlined
-            clearable
+            outlined 
 
             solo
           ></v-text-field> 
